@@ -12,7 +12,7 @@ import com.greatlearning.collegefest.repository.StudentRepository;
 public class StudentServiceImpl implements StudentService {
 
 	@Autowired
-	StudentRepository studentRepository;
+	private StudentRepository studentRepository;
 
 	@Override
 	public List<Student> findAll() {

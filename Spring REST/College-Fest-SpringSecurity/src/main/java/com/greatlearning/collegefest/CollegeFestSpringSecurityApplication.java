@@ -8,6 +8,7 @@ public class CollegeFestSpringSecurityApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CollegeFestSpringSecurityApplication.class, args);
+		System.out.println("Application booted successfully");
 	}
 
 }

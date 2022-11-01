@@ -1,5 +1,6 @@
 package com.greatlearning.collegefest.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.greatlearning.collegefest.model.Student;
 import com.greatlearning.collegefest.service.StudentService;
@@ -18,14 +20,12 @@ import com.greatlearning.collegefest.service.StudentService;
 public class StudentController {
 
 	@Autowired
-	StudentService studentServ;
+	private StudentService studentServ;
 
 	@GetMapping("/list")
 	public String listStudents(Model model1) {
 
 		List<Student> students = studentServ.findAll();
-		
-		//System.out.println(students.get(0).getFirstName());
 
 		model1.addAttribute("students", students);
 
@@ -79,5 +79,20 @@ public class StudentController {
 		studentServ.deleteById(id);
 
 		return "redirect:/students/list";
+	}
+
+	@RequestMapping(value = "/403")
+	public ModelAndView accessDeniedPage(Principal user) {
+
+		ModelAndView model = new ModelAndView();
+
+		if (user != null) {
+			model.addObject("msg", "Hi " + user.getName() + ", you do not have permission to access this page!");
+		} else {
+			model.addObject("msg", "Sorry!\nYou do not have permission to access this page!");
+		}
+
+		model.setViewName("403");
+		return model;
 	}
 }
